@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Guilp</string>
+    <string name="login_nom">Nom</string>
+    <string name="login_passwd">Password</string>
+    <string name="log_in_button">connexion</string>
+    <string name="Signup">s\'inscrire</string>
+    <string name="signup_nom">Nom</string>
+    <string name="signup_prenom">Prenom</string>
+    <string name="s_password">Password</string>
+    <string name="s_confirP">Confirmer password</string>
+    <string name="s_email">Email</string>
+    <string name="signup_button">s\'inscrire</string>
+</resources>
