@@ -1,6 +1,5 @@
 package com.example.cecile.guilp;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,33 +17,38 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
- * Created by cecile on 21/04/2016.
+ * Created by cecile on 29/04/2016.
  */
-public class LinkDatabase  extends AsyncTask<String, Void, String> {
+public class LinkDatabaseForSignup  extends AsyncTask<String, Void, String> {
     Context context;
-    AlertDialog alerdialog;
 
-    public LinkDatabase(Context ctxt)
-    {
+    public LinkDatabaseForSignup(Context ctxt) {
         context = ctxt;
     }
+
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://guilp.alwaysdata.net/login.php";
-        if (type.equals("login")) {
+        String signup_url = "http://guilp.alwaysdata.net/signup.php";
+        if (type.equals("signup")) {
             try {
-                String txtmail = params[1];
-                String txtPassword = params[2];
-                URL url = new URL(login_url);
+                String lastName = params[1];
+                String firstName = params[2];
+                String password = params[3];
+                String repeatpass = params[4];
+                String email = params[5];
+                URL url = new URL(signup_url);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
                 conn.setDoInput(true);
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                String post_data = URLEncoder.encode("txtmail", "UTF-8") + "=" + URLEncoder.encode(txtmail, "UTF-8") + "&"
-                        + URLEncoder.encode("txtPassword", "UTF-8") + "=" + URLEncoder.encode(txtPassword, "UTF-8");
+                String post_data = URLEncoder.encode("txtname", "UTF-8") + "=" + URLEncoder.encode(lastName, "UTF-8") + "&" +
+                        URLEncoder.encode("txtprenom", "UTF-8") + "=" + URLEncoder.encode(firstName, "UTF-8") + "&" +
+                        URLEncoder.encode("txtPassword", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                        + URLEncoder.encode("txtRepeatPassword", "UTF-8") + "=" + URLEncoder.encode(repeatpass, "UTF-8") + "&" +
+                        URLEncoder.encode("txtmail", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -66,37 +70,28 @@ public class LinkDatabase  extends AsyncTask<String, Void, String> {
             } catch (java.io.IOException e) {
                 e.printStackTrace();
             }
-
         }
         return null;
     }
 
-    @Override
-    protected  void onPreExecute(){
-        alerdialog = new AlertDialog.Builder(context).create();
-        alerdialog.setTitle("Login status");
-    }
 
     @Override
     protected void onPostExecute(String result)
     {
         if(result.contentEquals("success")) {
-
-            context.startActivity(new Intent(context, DatalistActivity.class));
+            Toast toast= Toast.makeText(context, "Inscription effectuée. A présent connectez vous!", Toast.LENGTH_SHORT);
+            toast.show();
+            context.startActivity(new Intent(context, LoginActivity.class));
 
 
         }else if(result.contentEquals("champsvide")) {
             Toast toast= Toast.makeText(context, "Vous devez remplir tout les champs !", Toast.LENGTH_SHORT);
             toast.show();
 
-            }else if(result.contentEquals("erreur"))
-        {
-            Toast toast= Toast.makeText(context, "Oups une erreur est survenue lors de votre inscription! veuillez recommencer", Toast.LENGTH_SHORT);
-            toast.show();
         }
         else
         {
-            Toast toast= Toast.makeText(context, "les mots de passe ne sont pas identiques", Toast.LENGTH_SHORT);
+            Toast toast= Toast.makeText(context, "L'email ou le mots de passe est incorrecte", Toast.LENGTH_SHORT);
             toast.show();
         }
 

@@ -12,12 +12,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,46 +50,31 @@ public class DatalistActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                String response = "";
-
-                // Depends on your web service
-                //httppost.setHeader("Content-type", "application/json");
-
-                InputStream inputStream = null;
-                String result = null;
+                String getData_url = "http://guilp.alwaysdata.net/getData.php";
+                String line;
+                String result =null;
                 try {
-                    URL url = new URL("C:/wamp//www/Guilp_php_code/getData.php");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(15000);
-                    conn.setConnectTimeout(15000);
-                    conn.setRequestMethod("POST");
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
 
-                    OutputStream os = conn.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(
-                            new OutputStreamWriter(os, "UTF-8"));
-                    writer.flush();
-                    writer.close();
-                    os.close();
-                    int responseCode=conn.getResponseCode();
 
-                    inputStream =conn.getInputStream();
-                    // json is UTF-8 by default
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
+                    URL url = new URL(getData_url);
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    InputStream is = conn.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                    StringBuilder stringBuilder = new StringBuilder();
 
-                    String line = null;
-                    while ((line = reader.readLine()) != null)
+                    while ((line = bufferedReader.readLine()) != null)
                     {
-                        sb.append(line + "\n");
+                        stringBuilder.append(line + "\n");
                     }
-                    result = sb.toString();
-                } catch (Exception e) {
-                    // Oops
-                }
-                finally {
-                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+                    bufferedReader.close();
+                    is.close();
+                    conn.disconnect();
+                    result= stringBuilder.toString().trim();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (java.io.IOException e) {
+                    e.printStackTrace();
                 }
                 return result;
             }

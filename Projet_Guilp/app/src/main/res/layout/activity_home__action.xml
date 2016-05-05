@@ -9,4 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.cecile.guilp.Home_Action">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <ImageButton
+            android:layout_width="68dp"
+            android:layout_height="67dp"
+            android:id="@+id/imageButton"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_img_profil" />
+    </LinearLayout>
 </RelativeLayout>

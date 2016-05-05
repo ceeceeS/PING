@@ -20,12 +20,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="10dp"
+            android:inputType="textEmailAddress"
             android:ems="10"
-            android:padding="10dp"
-            android:id="@+id/GNom"
-            android:hint="@string/login_nom" />
+            android:id="@+id/login_email"
+            android:hint="@string/login_mail" />
 
         <EditText
             android:layout_width="match_parent"

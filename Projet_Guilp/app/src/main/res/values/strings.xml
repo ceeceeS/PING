@@ -10,4 +10,5 @@
     <string name="s_confirP">Confirmer password</string>
     <string name="s_email">Email</string>
     <string name="signup_button">s\'inscrire</string>
+    <string name="login_mail">Email</string>
 </resources>

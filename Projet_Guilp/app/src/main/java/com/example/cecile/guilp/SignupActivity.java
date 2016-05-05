@@ -35,7 +35,7 @@ public class SignupActivity extends AppCompatActivity {
             String cpass = cofirmPassword.getText().toString();
             String mail = email.getText().toString();
             String type = "signup";
-            LinkDatabase linkdb = new LinkDatabase(this);
+            LinkDatabaseForSignup linkdb = new LinkDatabaseForSignup(this);
             linkdb.execute(type, nom, prenom, pass, cpass, mail);
         }
 
